@@ -1,5 +1,6 @@
 package com.rajamarul.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -13,6 +14,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
+import java.sql.JDBCType;
 import java.sql.Types;
 
 @Configuration
@@ -39,8 +42,10 @@ public class DatabaseConfig {
 
     @Bean
     public SimpleJdbcCall simpleJdbcCall(DataSource dataSource1) {
-         return new SimpleJdbcCall(dataSource1).withProcedureName("read_employee")
-                 .withoutProcedureColumnMetaDataAccess().useInParameterNames("in_employeeId")
+         return new SimpleJdbcCall(dataSource1)
+                 .withProcedureName("read_employee")
+                 .withoutProcedureColumnMetaDataAccess()
+                 .useInParameterNames("in_employeeId")
                  .declareParameters(
                          new SqlParameter("in_employeeId", Types.INTEGER),
                          new SqlOutParameter("out_name",Types.CHAR),
@@ -50,5 +55,17 @@ public class DatabaseConfig {
     }
 
 
+    /// Another way of dataSource Creation:
+
+   /* @Bean("sqlDataSource")
+    @ConfigurationProperties(prefix = "sql.dataSoiurce")
+    public DataSource primaryDataSoiurce() {
+         return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name="sqlJdbcTemplate")
+    public JdbcTemplate jdbcTemplate1(@Qualifier("sqlDataSource") DataSource dataSource) {
+         return new JdbcTemplate(dataSource);
+    }*/
 
 }
