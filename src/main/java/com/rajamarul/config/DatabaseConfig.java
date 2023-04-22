@@ -43,7 +43,7 @@ public class DatabaseConfig {
     @Bean
     public SimpleJdbcCall simpleJdbcCall(DataSource dataSource1) {
          return new SimpleJdbcCall(dataSource1)
-                 .withProcedureName("read_employee")
+                 .withProcedureName("read_employee") // call javq Techie database
                  .withoutProcedureColumnMetaDataAccess()
                  .useInParameterNames("in_employeeId")
                  .declareParameters(
