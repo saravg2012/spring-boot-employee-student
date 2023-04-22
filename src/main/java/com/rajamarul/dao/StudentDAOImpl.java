@@ -120,7 +120,7 @@ public class StudentDAOImpl implements StudentDAO {
     public List<Student> findStudentByNameWithResultSetExtractor(String studentName) {
         String sql = "SELECT * FROM STUDENT WHERE name =? ";
         List<Student> studentList = jdbcTemplate.query(sql,new StudentResultSetExtractor(),studentName);
-
+        System.out.println("findStudentByNameWithResultSetExtractor() done  -----");
         return studentList;
     }
 
